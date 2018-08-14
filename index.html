@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Map Komun.org</title>
+    <link rel="shortcut icon" href="statics/img/mapfaircoin.png" />
+    <link rel="icon" href="statics/img/mapfaircoin.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://map.komun.org" />
+    <meta property="og:site_name" content="Map Komun.org"/>
+    <meta property="og:title" content="Map Komun.org" />
+    <meta property="og:description" content="Map Komun.org | Find all FairCoin and social currency accepting places worldwide" />
+    <meta name="description" content="Map Komun.org | Find all FairCoin and social currency accepting places worldwide" />
+    <meta property="og:image" content="https://map.komun.org/statics/img/opengraph300x200.png"/>
+
+    <!-- <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet"> -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.1/dist/leaflet.css" />
+    <!--[if lte IE 8]><link rel="stylesheet" href="//cdn.leafletjs.com/leaflet-0.7.2/leaflet.ie.css" /><![endif]-->
+
+    <!-- leafletjs marker cluster -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.3.0/dist/MarkerCluster.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.3.0/dist/MarkerCluster.Default.css" />
+
+    <link rel="stylesheet" href="statics/style.css" />
+    <link rel="stylesheet" href="statics/css/sidebar-loader.css" />
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+</head>
+<body>
+    <div id="sidebar" class="sidebar collapsed">
+        <!-- Nav tabs -->
+        <div class="sidebar-tabs">
+            <ul role="tablist">
+                <li><a href="#home" role="tab"><i class="fa fa-bars"></i></a></li>
+                <li><a href="#filter" title="Select Filters" role="tab"><i class="fa fa-filter"></i></a></li>
+                <li><a onclick="showLocalNodes()" title="Show LocalNodes" role="tab"><i class="fas fa-home"></i></a></li>
+                <li><a onclick="showCommonRoutes()" title="Show CommonRoutes" role="tab"><i class="fa fa-route"></i></a></li>
+                <li><a href="#search" title="Search" role="tab"><i class="fa fa-search"></i></a></li>
+                <li><a href="#about" role="tab"><i class="fa fa-question-circle"></i></a></li>
+            </ul>
+
+            <ul role="tablist">
+                <li><a href="#settings" role="tab"><i class="fas fa-cog"></i></a></li>
+            </ul>
+        </div>
+
+        <!-- Tab panes -->
+        <div class="sidebar-content">
+            <div class="sidebar-pane" id="home">
+                <h1 class="sidebar-header">
+                    Map Komun
+                    <span class="sidebar-close"><i class="fa fa-caret-left"></i></span>
+                </h1>
+                <br>
+                <p>
+                  WHAT IS THE KOMUN MAP?
+                  The <b>Komun Map</b> is a collaborative map which gives a global overview of various initiatives which strive
+                  towards a commons economy*: places which accept FairCoin, POEs, FairCoop local nodes, community
+                  currencies, eco-networks, food groups, routes and shared vehicles... <a href="https://komun.org" target="_blank">Visit the page!</a> Search, find, share
+                  and contribute to generate alternatives which transform our surroundings through the Integral Revolution.
+                </p>
+                <!-- <img style="width:100px;height:100px; margin:30px;" src="img/map.svg" /> -->
+                <a href="statics/img/komun-ecosystem.jpg" target="_blank"><img style="width:100%;" src="statics/img/komun-ecosystem.jpg" /></a>
+            </div>
+
+            <div class="sidebar-pane" id="filter">
+                <h1 class="sidebar-header">Filters<span class="sidebar-close"><i class="fa fa-caret-left"></i></span></h1>
+                <br>
+                <div class='checkbox'>
+                          <label><input onclick="selectAllFilters()" type='checkbox' value='' checked >
+                            All</label>
+                        </div>
+                <div id="filtersList"></div>
+                <hr>
+                <!-- <button onclick="applyFilters()" type="button" class="btn btn-outline-dark float-right">Update</button> -->
+            </div>
+            <div class="sidebar-pane" id="search">
+                <h1 class="sidebar-header">Search<span class="sidebar-close"><i class="fa fa-caret-left"></i></span></h1>
+                <br>
+                <p>
+                  <input onkeydown="search()" id="searchinput" type="text" class="form-control" placeholder="Search...">
+                  <br>
+                  <!-- <button onclick="search()" type="button" class="btn btn-outline-dark float-right">Search</button> -->
+                  <div id="searchResults">
+
+                  </div>
+                </p>
+            </div>
+            <div class="sidebar-pane" id="about">
+                <h1 class="sidebar-header">About<span class="sidebar-close"><i class="fa fa-caret-left"></i></span></h1>
+                <br>
+                <img style="width:100%;padding:10px;" src="statics/img/komun-logo-largo.png" />
+                <p><strong>Komun.org es un equipo cooperativo</strong> de gente experta en diferentes areas técnicas: seguridad, redes, blockchain, diseño gráfico y edición de vídeo, diseño web, Prestashop, WordPress, programación... <strong>al servicio del bien común</strong>.
+                  </p>
+                <p>Siempre usamos software libre, eso es un tema irrenunciable porque nuestras herramientas, también son políticas.</p>
+                <p>Si formas parte de un proyecto cooperativo o tienes ideas que puedan contribuir a hacer un mundo mejor, podemos ayudarte. Simplemente cuéntanos qué necesitas y buscaremos la mejor forma de hacerlo a cambio de una retribución razonable o ¿quién sabe? si
+                  nos enamora un proyecto, no respondemos de nuestros actos.</p>
+                <p><strong>Afinidades:</strong></p>
+                <p>Komun.org es una cooperativa autónoma al servicio del común. Colaboramos con el proyecto <a target="_blank" href="https://fair.coop">FairCoop</a>, <em>el ecosistema cooperativo de la Tierra para una economía justa</em>. Por eso aceptamos <a target="_blank" href="https://fair-coin.org">FairCoin</a>,
+                  <em>la moneda ecológica para una economía justa</em>. Igualmente estamos abiertas a la colaboración con cualquier organización o colectivo con valores éticos, ecológicos, solidarios y orientado al bien común. Si deseas colaborar, aceptamos donaciones
+                  en FairCoin:</p>
+                <p><strong>fHe67HH8WWR5vA6oPNTyefKbbuABh8sxz9</strong></p>
+                <p>Para cualquier donación en otra moneda o para establecer sinergias, por favor, ponte en <a target="_blank" href="https://komun.org/kontakto">contacto</a> con nosotras.</p>
+                <p><strong>Características:</strong></p>
+                <p>Somos un equipo colaborativo <strong>multidisciplinar, autogestionado y abierto</strong>. Nos gusta trabajar juntas, elaborar herramientas útiles para el común, usar y crear software libre tanto como facilitar el camino hacia un mundo mejor desde la tecnología
+                  y los proyectos prácticos. No nos gusta la burocracia, la falta de transparencia, la verticalidad organizativa, los roles de poder ni perder el tiempo en caminos tortuosos. Somos autónomas, libres, alegres y anárquicas. Hacemos cosas, sin tonterías.
+                  </p>
+                <p><strong>¿Por qué hay muchas K y nombres raros?</strong></p>
+                <p>Creemos que los seres humanos podemos entendernos si hay voluntad y respetamos profundamente todas las lenguas. Por ello, sentimos un amor especial por el <strong>Esperanto</strong>, una lengua auxiliar cuya única finalidad es que todos los seres humanos
+                  puedan entenderse de una manera sencilla y eficiente, respetando a todas las lenguas nativas del mundo. Por eso, al igual que en los decorados del gueto de la película "<a target="_blank" href="http://www.delbarrio.eu/cine.htm">El Gran Dictador</a>", hay muchas palabras
+                  en Esperanto en nuestro sitio web. La cuestión es que podamos entendernos.</p>
+                <hr>
+                <p>
+                  Full code in <a href="https://github.com/arnaucode/faircoinmap-webapp" target="_blank">Git repo</a> 🍙
+                </p>
+            </div>
+
+
+            <div class="sidebar-pane" id="settings">
+                <h1 class="sidebar-header">Settings<span class="sidebar-close"><i class="fa fa-caret-left"></i></span></h1>
+                <br>
+                <p>
+                  <div class="form-group">
+                    <label for="exampleFormControlSelect1">Language</label>
+                    <select onchange="changeLanguage()" class="form-control" id="lang">
+                      <option value="ca" >Catalan</option>
+                      <option value="de" >German</option>
+                      <option value="el" >Greek</option>
+                      <option value="en">English</option>
+                      <option value="eo" >Esperanto</option>
+                      <option value="es" >Spanish</option>
+                      <option value="fr" >French</option>
+                      <option value="gl" >Galician</option>
+                      <option value="it" >Italian</option>
+                      <option value="nl" >Dutch</option>
+                      <option value="pt" >Portuguese</option>
+                    </select>
+                  </div>
+                </p>
+            </div>
+        </div>
+    </div>
+    <div id="loadingbar">
+      <div class="cssload-loader-inner">
+    		<div class="cssload-cssload-loader-line-wrap-wrap">
+    			<div class="cssload-loader-line-wrap"></div>
+    		</div>
+    		<div class="cssload-cssload-loader-line-wrap-wrap">
+    			<div class="cssload-loader-line-wrap"></div>
+    		</div>
+    		<div class="cssload-cssload-loader-line-wrap-wrap">
+    			<div class="cssload-loader-line-wrap"></div>
+    		</div>
+    		<div class="cssload-cssload-loader-line-wrap-wrap">
+    			<div class="cssload-loader-line-wrap"></div>
+    		</div>
+    		<div class="cssload-cssload-loader-line-wrap-wrap">
+    			<div class="cssload-loader-line-wrap"></div>
+    		</div>
+    	</div>
+    </div>
+
+    <div id="map" class="sidebar-map"></div>
+    <div class="registerButtonBox">
+      <a href="https://map.komun.org/accounts/register/" class="btn btn-outline-dark">Register</a>
+      <a href="https://map.komun.org/accounts/login/" class="btn btn-outline-dark">Login</a>
+    </div>
+    <div id="rightCard" class"card">
+      <div class="card-body">
+        <div class="btn btn-light float-right" onclick="hideRightCard()">X</div>
+        <h5 id="rightCard-title" class="card-title"></h5>
+        <div id="rightCard-categories"></div>
+        <img id="rightCard-img" class="card-img-top hidden" src="" alt="img">
+        <p id="rightCard-text" class="card-text"></p>
+        <a id="rightCard-web" href="#" class="card-link" target="_blank"></a>
+        <a id="rightCard-mastodon" href="#" class="card-link" target="_blank"></a>
+        <a id="rightCard-twitter" href="#" class="card-link" target="_blank"></a>
+        <a id="rightCard-facebook" href="#" class="card-link" target="_blank"></a>
+        <a id="rightCard-telegram" href="#" class="card-link" target="_blank"></a>
+        <a id="rightCard-email" href="#" class="card-link"></a>
+      </div>
+    </div>
+
+
+    <script src="https://unpkg.com/leaflet@1.0.1/dist/leaflet.js"></script>
+    <!-- leafletjs marker cluster -->
+    <script src="https://unpkg.com/leaflet.markercluster@1.3.0/dist/leaflet.markercluster.js"></script>
+    <script src="statics/js/leaflet-sidebar.js"></script>
+
+    <!-- Bootstrap -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+    <script src="statics/index.js"></script>
+    <script src="statics/localnodes.js"></script>
+    <script src="statics/commonroutes.js"></script>
+
+</body>
+</html>

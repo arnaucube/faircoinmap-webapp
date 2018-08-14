@@ -1,0 +1,77 @@
+body {
+    padding: 0;
+    margin: 0;
+}
+
+html, body, #map {
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    font: 10pt "Helvetica Neue", Arial, Helvetica, sans-serif;
+}
+.registerButtonBox {
+  position: absolute;
+  right: 15px;
+  top: 15px;
+  z-index: 2000;
+}
+.lvl2 {
+  margin-left: 15px;
+}
+#rightCard {
+  position: absolute;
+  right: -300px;
+  top: 0;
+  max-width: 300px;
+  max-height: 100%;
+  overflow-y: scroll;
+  z-index: 2000;
+  background: #ffffff;
+  -webkit-transition: all 0.5s; /* Safari */
+  transition: all 0.5s;
+}
+.rightCard-show {
+  right: 0px!important;
+}
+.hidden {
+  visibility: hidden;
+}
+.marker {
+  background: #ffffff;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  /* box-shadow: 0 0 5px 5px rgba(66, 134, 244, 0.2); */
+  -webkit-transition: all 0.2s; /* Safari */
+  transition: all 0.2s;
+}
+/* .marker:hover {
+  border: 2px solid #000000;
+} */
+
+.routeMarker {
+  background: #ffffff;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 2px solid rgb(65, 202, 244);
+  box-shadow: 0 0 5px 5px rgba(65, 202, 244, 0.2);
+  -webkit-transition: all 0.2s; /* Safari */
+  transition: all 0.2s;
+}
+.lnMarker {
+  background: #ffffff;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 2px solid rgb(43, 216, 129);
+  box-shadow: 0 0 5px 5px rgba(43, 216, 129, 0.2);
+  -webkit-transition: all 0.2s; /* Safari */
+  transition: all 0.2s;
+}
+.marker-red {
+  box-shadow: 0 0 5px 5px rgba(244, 78, 66, 0.2)!important;
+}
+.marker-blue {
+  box-shadow: 0 0 5px 5px rgba(63, 154, 244, 0.2)!important;
+}
